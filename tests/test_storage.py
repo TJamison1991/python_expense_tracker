@@ -1,32 +1,24 @@
 # tests/test_storage.py
 
 from pathlib import Path
-from storage import load_expenses, save_expenses
+from storage import load_expenses, init_db, add_expense
 
-def test_save_and_load_expenses(tmp_path):
-    test_file = tmp_path / "expenses.json"
+def test_add_and_load_expense(tmp_path):
+    db = tmp_path / "test.db"
+    init_db(db)
 
-    expenses = [
-        {"amount": 50, "category": "Bills", "date": "2026-01-01"}
-    ]
+    add_expense(
+        {
+            "amount": 100,
+            "category": "Food",
+            "description": "Lunch",
+            "date": "2026-01-10",
+        },
+        db,
+    )
 
-    save_expenses(expenses, test_file)
-    loaded = load_expenses(test_file)
+    expenses = load_expenses(db)
 
-    assert loaded == expenses
-
-
-def test_load_missing_file(tmp_path):
-    test_file = tmp_path / "missing.json"
-
-    expenses = load_expenses(test_file)
-
-    assert expenses == []
-
-def test_load_empty_file(tmp_path):
-    test_file = tmp_path / "empty.json"
-    test_file.touch()  # creates empty file
-
-    expenses = load_expenses(test_file)
-
-    assert expenses == []
+    assert len(expenses) == 1
+    assert expenses[0]["amount"] == 100
+    assert expenses[0]["category"] == "Food"

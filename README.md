@@ -1,156 +1,122 @@
-# Expense Tracker (Python CLI)
+Expense Tracker (Python, SQLite, pytest)
 
-A simple command-line expense tracker built in Python.  
-This project allows users to record expenses, persist data locally, and view summaries by month and category.
+A simple command-line expense tracker built with Python, featuring persistent storage using SQLite and a clean, testable architecture with pytest.
 
-The goal of this project was to practice:
-- Python fundamentals
-- File I/O
-- Clean project structure
-- Unit testing with pytest
-- Defensive programming and error handling
+This project demonstrates real-world Python practices such as separation of concerns, database-backed storage, and automated testing.
 
----
+✨ Features
 
-## Features
+Add and view expenses from the command line
 
-- Add expenses (amount, category, date, description)
-- Persist data locally using JSON
-- View all recorded expenses
-- Monthly expense summaries
-- Category-based expense summaries
-- Unit tests using pytest
-- Modular, testable codebase
+Monthly expense summaries
 
----
+Category-based summaries
 
-## Project Structure
+Persistent storage using SQLite
 
+Fully tested business logic with pytest
+
+Clean, beginner-friendly architecture
+
+🛠️ Tech Stack
+
+Python 3
+
+SQLite (via Python standard library sqlite3)
+
+pytest for testing
+
+SQLite is included with Python — no external database setup required.
+
+📁 Project Structure
 expense_tracker/
-├── expense_tracker.py # CLI application
-├── storage.py # File I/O logic
-├── analytics.py # Business logic
-├── expenses.json # Local data storage
+│
+├── expense_tracker.py      # CLI application
+├── storage.py              # SQLite persistence layer
+├── analytics.py            # Business logic
+│
 ├── tests/
-│ ├── test_storage.py
-│ └── test_analytics.py
-├── README.md
-└── pyproject.toml # pytest configuration
+│   ├── test_storage.py
+│   └── test_analytics.py
+│
+├── pyproject.toml
+├── .gitignore
+└── README.md
 
-yaml
-Copy code
+🚀 Getting Started
+1️⃣ Clone the Repository
+git clone https://github.com/your-username/expense-tracker.git
+cd expense-tracker
 
----
+2️⃣ (Optional) Create a Virtual Environment
+python -m venv venv
+source venv/bin/activate   # macOS / Linux
+venv\Scripts\activate      # Windows
 
-## Requirements
-
-- Python 3.9+
-- pytest
-
-Install pytest if needed:
-
-```bash
+3️⃣ Install Dependencies
 pip install pytest
-How to Run the Application
+
+
+No database installation is required — SQLite is built into Python.
+
+▶️ Running the Application
+
 From the project root:
 
-bash
-Copy code
 python expense_tracker.py
+
+
 Follow the on-screen menu to add and view expenses.
 
-Running Tests
-Run all tests with:
-
-bash
-Copy code
+🧪 Running the Tests
 pytest
-Run tests with verbose output:
 
-bash
-Copy code
+
+Or with verbose output:
+
 pytest -v
-Example Expense Format
-Expenses are stored as JSON objects in expenses.json:
 
-json
-Copy code
-{
-  "amount": 12.50,
-  "category": "Food",
-  "description": "Lunch",
-  "date": "2026-01-15"
-}
-Future Improvements
-Replace JSON storage with SQLite
 
-Add argument-based CLI (argparse or Typer)
+Tests use temporary SQLite databases and do not affect real data.
 
-Improve input validation
+🗄️ Storage Details
 
-Add charts and visualizations
+Expenses are stored in a local SQLite database (expenses.db)
 
-Add CI with GitHub Actions
+The database file is ignored by Git
 
-What I Learned
-Structuring Python projects for testability
+Tables are created automatically on first run
 
-Writing unit tests with pytest
+🧠 Design Notes
 
-Handling file edge cases safely
+Storage layer handles all database interactions
 
-Debugging real-world runtime errors
+Analytics layer contains pure business logic
 
-Separating business logic from user input
+CLI layer remains thin and user-focused
 
-License
-This project is open source and available under the MIT License.
+Architecture is designed for easy refactoring and extension
 
-yaml
-Copy code
+🔮 Possible Future Improvements
 
----
+Edit and delete expenses
 
-# 2️⃣ Pushing the Project to GitHub (Step by Step)
+SQLAlchemy ORM
 
-I’ll assume:
-- You **do not** have a repo yet
-- You’re using the terminal
-- You already have Git installed (macOS usually does)
+REST API with FastAPI
 
----
+GitHub Actions CI
 
-## Step 1: Create a GitHub Repository
+Code coverage reporting
 
-1. Go to **https://github.com**
-2. Click **“New repository”**
-3. Repository name:  
-expense-tracker
+📌 Why This Project?
 
-cpp
-Copy code
-4. Description (optional):  
-A Python CLI expense tracker with pytest unit tests
+This project was built to practice and demonstrate:
 
-yaml
-Copy code
-5. Choose **Public**
-6. ❌ Do **not** initialize with README (you already have one)
-7. Click **Create repository**
+Python fundamentals
 
-Leave this page open — you’ll need it.
+SQLite database integration
 
----
+Test-driven, modular design
 
-## Step 2: Initialize Git Locally
-
-In your project directory:
-
-```bash
-cd ~/Documents/expense_tracker
-git init
-Check status:
-
-bash
-Copy code
-git status
+Professional project structure suitable for a portfolio

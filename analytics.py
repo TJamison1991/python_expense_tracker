@@ -2,16 +2,16 @@
 
 def get_monthly_total(expenses,month):
     return sum(
-        expense["amount"]
-        for expense in expenses
-        if expense["date"].startswith(month)
+        e["amount"]
+        for e in expenses
+        if e["date"].startswith(month)
     )
 
 def get_category_totals(expenses):
     totals = {}
 
-    for expense in expenses:
-        category = expense["category"]
-        totals[category] = totals.get(category, 0) + expense['amount']
+    for e in expenses:
+        category = e["category"]
+        totals[category] = totals.get(category, 0) + e['amount']
     
     return totals

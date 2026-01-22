@@ -1,22 +1,45 @@
 # expense_tracker/storage.py
 
-import json
+import sqlite3
 from pathlib import Path
 
-DATA_FILE = Path("expenses.json")
+DB_FILE = Path("expenses.db")
 
 
-def load_expenses(file_path=DATA_FILE):
-    if not file_path.exists():
-        return[]
-    
-    if file_path.stat().st_size == 0:
-        return[]
-    
-    with open(file_path, "r") as f:
-        return json.load(f)
-    
+def get_connection(db_path=DB_FILE):
+    return sqlite3.connect(db_path)
 
-def save_expenses(expenses, file_path=DATA_FILE):
-    with open(file_path, "w") as f:
-        json.dump(expenses, f, indent=4)
+def init_db(db_path=DB_FILE):
+    with get_connection(db_path) as conn:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS expenses (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                amount REAL NOT NULL,
+                category TEXT NOT NULL,
+                description TEXT,
+                date TEXT NOT NULL
+            )
+        """)
+
+def add_expense(expense, db_path=DB_FILE):
+    with get_connection(db_path) as conn:
+        conn.execute(
+            """
+            INSERT INTO expenses (amount, category, description, date)
+            VALUES (?,?,?,?)
+            """,
+            (
+                expense["amount"],
+                expense["category"],
+                expense["description"],
+                expense["date"],
+            ),
+        )
+
+
+def load_expenses(db_path=DB_FILE):
+    with get_connection(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute("SELECT * FROM expenses").fetchall()
+        return [dict(row) for row in rows]
+
